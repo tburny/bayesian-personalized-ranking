@@ -1,4 +1,4 @@
-package de.burnynet
+package de.burnynet.bpr
 
 import breeze.linalg.DenseMatrix
 import java.lang.Math._
@@ -12,10 +12,9 @@ import scala.util.Random
 object ModelLearner {
 
   // Use symbols as in the paper, thats more readable
-  def learnBpr(α :Double, λ:Double, model: BPRModel) = {
+  def learnBpr(α :Double, λ:Double, model: BPRModel, ds: List[(Int,Int,Int)]) = {
     val Θ = model.correlationMatrix.copy
-    // randomize which items of D_s are picked first
-    val rndDs = Random.shuffle(model.Ds).toList
+    val rndDs = Random.shuffle(ds).toList
     // just do it for all items.
     // See e.g. /org/recommender101/recommender/extensions/bprmf/BPRMFRecommender.java:212 in Recommender101
     rndDs.foldLeft(Θ) {

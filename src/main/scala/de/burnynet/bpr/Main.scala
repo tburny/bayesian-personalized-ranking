@@ -1,4 +1,4 @@
-package de.burnynet
+package de.burnynet.bpr
 
 import breeze.linalg.{DenseVector, DenseMatrix}
 import Math.{sqrt,pow}
@@ -15,7 +15,8 @@ object Main extends App {
   val userItems =
     DenseMatrix (
       (0,1,1,0), // alice
-      (1,1,0,0)  // tom
+      (1,1,0,0),  // tom
+      (0,0,1,1)   // bob
     ).t // transpose so the breeze lib returns vectors for users on (::, 0)
 
   val model : BPRModel = new kNNModel(userItems)
@@ -57,7 +58,9 @@ object Main extends App {
   sep("LearnBPR")
   //values taken from Recommender101:
   val alpha = 0.05
-  val learnedModel = ModelLearner.learnBpr(0.1, 0, model)
+  // see what the model only with alices data would be
+  val ds = model.Ds.toList //filter { case (u,_,_) => u == 0}
+  val learnedModel = ModelLearner.learnBpr(0.1, 0, model,ds)
   println(truncate(learnedModel))
 
 
@@ -65,6 +68,7 @@ object Main extends App {
     println("\n================" + s + "================")
   }
 
+  // shorter representation
   def truncate(m:DenseMatrix[Double]) = {
     m.foreachKey { case (i,j) => m(i,j) = (math rint m(i,j) * 100) / 100}
     m

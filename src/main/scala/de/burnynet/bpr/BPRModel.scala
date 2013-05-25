@@ -1,10 +1,10 @@
-package de.burnynet
+package de.burnynet.bpr
 
 import breeze.linalg.{DenseVector, DenseMatrix}
 import java.lang.Math._
 
 /**
- *
+ * A model for de.burnynet.bpr.ModelLearner
  * @author tobi
  *
  */
@@ -35,15 +35,12 @@ abstract class BPRModel(userItems:DenseMatrix[Int]) {
     (for (x <- 0 until row.length if row(x) > 0) yield x).toSet
   }
 
-
-
   // U_i +
   def usersWhichRatedItemPositive(i:Int) : Set[Int] = {
     // Transpose so we do not end up in a matrix -.-
     val row: DenseVector[Int] = userItems.t(::,i)
     (for (j <- 0 until row.length if (row(j)) > 0) yield j).toSet
   }
-
 
   def itemMatrix(d:DenseVector[Int]) : DenseMatrix[Int] = {
     val matrix = DenseMatrix.zeros[Int](d.length, d.length)

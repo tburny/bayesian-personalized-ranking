@@ -1,4 +1,4 @@
-package de.burnynet
+package de.burnynet.bpr
 
 import breeze.linalg.DenseMatrix
 import java.lang.Math._
