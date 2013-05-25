@@ -32,14 +32,14 @@ abstract class BPRModel(userItems:DenseMatrix[Int]) {
    */
   def positiveItemRatingsByUser(u:Int) = {
     val row = userItems(::,u)
-    (for (x <- 0 until row.length if row(x) > 0) yield x).toSet
+    (for (x <- 0 until row.length if row.valueAt(x) > 0) yield x).toSet
   }
 
   // U_i +
   def usersWhichRatedItemPositive(i:Int) : Set[Int] = {
     // Transpose so we do not end up in a matrix -.-
     val row: DenseVector[Int] = userItems.t(::,i)
-    (for (j <- 0 until row.length if (row(j)) > 0) yield j).toSet
+    (for (j <- 0 until row.length if (row.valueAt(j)) > 0) yield j).toSet
   }
 
   def itemMatrix(d:DenseVector[Int]) : DenseMatrix[Int] = {
