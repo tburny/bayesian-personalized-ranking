@@ -1,0 +1,2 @@
+This project tries to realize the method of bayesian recommendation generation proposed in the paper
+"Bayesian Personalized Recommendations" by Rendle et al., 2009 using breeze (https://github.com/scalanlp/breeze)
